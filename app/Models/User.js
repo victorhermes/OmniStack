@@ -36,7 +36,7 @@ class User extends Model {
   }
 
   // Para saber em quantos times o usuários está
-  team () {
+  teams () {
     return this.belongsToMany('App/Models/Team').pivotModel(
       'App/Models/UserTeam'
     )
