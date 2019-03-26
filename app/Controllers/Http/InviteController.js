@@ -3,7 +3,7 @@
 const Invite = use('App/Models/Invite')
 
 class InviteController {
-  async store ({ request, auth }) {
+  async store ({ request, response, auth }) {
     const invites = request.input('invites')
 
     const data = invites.map(email => ({
