@@ -3,7 +3,6 @@
 class TeamController {
   async index ({ auth }) {
     const teams = await auth.user.teams().fetch()
-
     return teams
   }
 
