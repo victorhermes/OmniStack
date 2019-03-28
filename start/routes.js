@@ -31,6 +31,8 @@ Route.group(() => {
 }).middleware('auth')
 
 Route.group(() => {
+  Route.get('roles', 'RoleController.index')
+
   Route.post('invites', 'InviteController.store')
     .validator('Invite')
     .middleware('can:invites_create')
