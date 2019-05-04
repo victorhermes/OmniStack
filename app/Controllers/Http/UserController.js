@@ -15,20 +15,16 @@ class UserController {
     const teams = await teamsQuery.pluck('team_id')
 
     // Verifica se o há algum invite para o user no banco de dados
-    if (teams.length === 0) {
-      return response
-        .status(401)
-        .send({ message: 'Você não foi convidado para nenhum time' })
+    if (teams) {
+      // Caso haja um invite, o user é criado
+      const user = await User.create(data)
+
+      // Como havia um invite para algum time, esse time já é cadastrado para o user
+      await user.teams().attach(teams)
+
+      // Como o usuário já consumiu o invite, ele é removido do banco de dados
+      await teamsQuery.delete()
     }
-
-    // Caso haja um invite, o user é criado
-    const user = await User.create(data)
-
-    // Como havia um invite para algum time, esse time já é cadastrado para o user
-    await user.teams().attach(teams)
-
-    // Como o usuário já consumiu o invite, ele é removido do banco de dados
-    await teamsQuery.delete()
 
     // Realiza um login para usar a plataforma
     const token = await auth.attempt(data.email, data.password)

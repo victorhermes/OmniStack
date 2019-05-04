@@ -2,7 +2,10 @@
 
 class ProjectController {
   async index ({ request }) {
-    const projects = request.team.projects().fetch()
+    const projects = request.team
+      .projects()
+      .orderBy('created_at', 'desc')
+      .fetch()
 
     return projects
   }
