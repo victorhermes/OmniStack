@@ -58,6 +58,13 @@ class ForgotPasswordController {
       user.password = password
 
       await user.save()
+
+      /* await Mail.send(['emails.reset_password'], message => {
+        message
+          .to(user.email)
+          .from('contato@moom.com.br', 'Victor | Moom')
+          .subject('Senha redefinida com sucesso')
+      }) */
     } catch (err) {
       return response
         .status(err.status)
