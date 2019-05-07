@@ -35,6 +35,8 @@ Route.group(() => {
   Route.resource('teams', 'TeamController')
     .apiOnly()
     .validator(new Map([[['teams.store', 'teams.update'], ['Team']]]))
+
+  Route.post('pay', 'PayController.store')
 }).middleware('auth')
 
 Route.group(() => {

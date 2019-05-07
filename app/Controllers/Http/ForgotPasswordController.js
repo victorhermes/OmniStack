@@ -9,7 +9,15 @@ class ForgotPasswordController {
   async store ({ request, response }) {
     try {
       const email = request.input('email')
-      const user = await User.findByOrFail('email', email)
+      const user = await User.findBy('email', email)
+
+      if (!user) {
+        return response
+          .status(401)
+          .send({
+            error: { message: 'Email não encontrado na base de dados.' }
+          })
+      }
 
       user.token = crypto.randomBytes(10).toString('hex')
       user.token_created_at = new Date()
@@ -33,7 +41,7 @@ class ForgotPasswordController {
     } catch (err) {
       return response
         .status(err.status)
-        .send({ error: { message: 'Algo deu errado' } })
+        .send({ error: { message: 'Erro ao recuperar senha.' } })
     }
   }
 
@@ -68,7 +76,7 @@ class ForgotPasswordController {
     } catch (err) {
       return response
         .status(err.status)
-        .send({ error: { message: 'Erro ao resetar senha.' } })
+        .send({ error: { message: 'Erro ao recuperar senha.' } })
     }
   }
 }

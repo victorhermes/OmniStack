@@ -33,6 +33,7 @@
     "adonis-kue": "^5.0.1",
     "crypto": "^1.0.1",
     "moment": "^2.24.0",
+    "pagarme": "^4.1.0",
     "pg": "^7.9.0"
   },
   "devDependencies": {
